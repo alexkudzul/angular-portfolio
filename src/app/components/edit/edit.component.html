@@ -1,0 +1,69 @@
+<!-- Mostrar cuando project alla cargado -->
+<div class="container" *ngIf="project">
+  <h2>{{title}}</h2>
+
+  <div class="message success" *ngIf="status == 'success'">
+    <!-- routerLink obtiene el id del proyecto guardado -->
+    El proyecto se ha creado correctamente, puedes <a [routerLink] = "['/project', save_project._id]">Verlo aquí</a>
+  </div>
+  <div class="message failed" *ngIf="status == 'failed'">
+    El proyecto no se ha podido crear
+  </div>
+
+  <!-- Indica que sera un formulario de angular -->
+  <!-- onsubmit con parametro para resetar el form -->
+  <form #projectForm = "ngForm" (ngSubmit) = "onSubmit()">
+
+    <!-- El # indica que sera un campo del formulariuo de angular, servira para validar los datos del campos -->
+    <!-- [(ngModel)] para modificar el objeto del modelo de datos "usuario" se encuentra en contacto.components.ts  -->
+    <p>
+      <label for="name">Nombre</label>
+      <input type="text" name="name" #name= "ngModel" [(ngModel)] = "project.name" required>
+      <span class="form-error" *ngIf="name.touched && !name.valid">
+        El nombre es obligatorio
+      </span>
+    </p>
+
+    <p>
+      <label for="description">Descripcion</label>
+      <textarea name="description" #description= "ngModel" [(ngModel)] = "project.description" required></textarea>
+      <span class="form-error" *ngIf="description.touched && !description.valid">
+        La descripción es obligatorio
+      </span>
+    </p>
+
+    <p>
+      <label for="category">Categoria</label>
+      <input type="text" name="category" #category= "ngModel" [(ngModel)] = "project.category" required>
+      <span class="form-error" *ngIf="category.touched && !category.valid">
+        La categoría es obligatorio
+      </span>
+    </p>
+
+    <p>
+      <label for="year">Año de lanzamiento</label>
+      <input type="number" name="year" #year= "ngModel" [(ngModel)] = "project.year">
+    </p>
+
+    <p>
+      <label for="langs">Lenguajes utilizados</label>
+      <input type="text" name="langs" #langs= "ngModel" [(ngModel)] = "project.langs" required>
+      <span class="form-error" *ngIf="langs.touched && !langs.valid">
+        El lenguaje utilizado es obligatorio
+      </span>
+    </p>
+
+    <p>
+      <label for="image">Imagen del proyecto</label>
+      <!-- Si la imagen existe, mostrar span -->
+      <span class="image" *ngIf="project.image" style="float: none;">
+        <img src="{{url+'get-image/'+project.image}}" style="width: 100px;">
+      </span> <br>
+      <!-- evento change, cuando se hace un cambio en el input lanza, va a lanzar otro metodo que se encuentra en el componente -->
+      <!-- La variable $event va a capturar toda la informacion del input, que fichero se ha elegido, nombre, etc  -->
+      <input type="file" name="image" placeholder="Subir imagen" (change) = "fileChangeEvent($event)">
+    </p>
+
+    <input type="submit" value="Enviar" [disabled] = "!projectForm.form.valid">
+  </form>
+</div>

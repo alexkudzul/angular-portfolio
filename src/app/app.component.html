@@ -1,0 +1,18 @@
+<!-- <h1>Proyecto de angular</h1> -->
+<header>
+  <ul>
+    <li><a [routerLink] = "['/about']" [routerLinkActive] = "['actived']">About</a></li>
+    <li><a [routerLink] = "['/projects']" [routerLinkActive] = "['actived']">Projects</a></li>
+    <li id="logo"><a>KuDzul</a></li>
+    <li><a [routerLink] = "['/create-projects']" [routerLinkActive] = "['actived']">Create</a></li>
+    <li><a [routerLink] = "['/contact']" [routerLinkActive] = "['actived']">Contact</a></li>
+  </ul>
+</header>
+
+<section id="content">
+  <router-outlet></router-outlet>
+</section>
+
+<footer>
+  Angular 9, Alex Ku Dzul &copy;
+</footer>
